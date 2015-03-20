@@ -3,7 +3,7 @@ from twisted.internet import reactor
 
 class Echoer(pb.Root):
     def remote_echo(self, st):
-        print 'echoing:', st
+        print 'server def Echoer echoing:', st
         return st
 
 if __name__ == '__main__':
