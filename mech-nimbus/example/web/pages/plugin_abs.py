@@ -1,9 +1,6 @@
-from abc import ABCMeta, abstractmethod
-from twisted.web.resource import Resource
 
 class PluggableMeta(type):
-    """ This class demos using a metaclass to register objects to be used in a dictionary
-    dynamically
+    """ This class demos using a metaclass to register plugins
     """
     def __init__(cls, name, bases, dct):
         if not hasattr(cls, 'registry'):
@@ -19,35 +16,29 @@ class PluggableMeta(type):
 class Pluggable(object):
     __metaclass__ = PluggableMeta
     
-    
-class FirstInterface(Pluggable,Resource):
-    def echo(self):
-        print "HELLO THIS IS THE FIRST INTERFACE" 
-        
-class SecondInterface(Pluggable,Resource):
-    #name = "name is here"
     def __init__(self):
-        pass
-        self.name = "name is here"
+        self.name = "null"
     
     def set_name(self,value):
         self.name = value
+    
+    
+    
+    
+class FirstInterface(Pluggable):
+    pass
+
         
-    def echo(self, value = "HELLO THIS IS THE SECOND INTERFACE"):
-        print value
-        self.name = value
+class SecondInterface(Pluggable):
+    pass
 
 
-#print(Pluggable.registry)
-# call as plugin class stored in registry
-print Pluggable.registry.get("SecondInterface")().name
-
-obj = Pluggable.registry.get("SecondInterface")
-print obj()
-obj().name = "Apple Zombie"
-print obj().name 
-#Pluggable.registry.get("SecondInterface")().name = "APPLE ZOMBIE"
+print Pluggable.registry
+print "\n\n\n"
+a = Pluggable.registry.get("SecondInterface")
+b = Pluggable.registry.get("SecondInterface")()
 
 
-print Pluggable.registry.get("SecondInterface")().name
+
+
 
